@@ -24,7 +24,7 @@ The ECU-Infotainment project, part of the Software Defined Vehicle initiative, e
 
 ## Installation
 To install the ECU-Infotainment project, follow these steps:
-1. Clone the repository: `git clone https://github.com/yourusername/ECU-Infotainment.git`
+1. Clone the repository: `git clone https://github.com/AhmedAdelWafdy7/ECU-Infotainment.git`
 2. Navigate to the project directory: `cd ECU-Infotainment`
 3. Open the project in Qt Creator: `qtcreator ECU-Infotainment.pro`
 4. Build the project using Qt Creator.
