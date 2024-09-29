@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Parts/BottomBar/BottomBar.qml</file>
+        <file>Parts/RightScreen/RightScreen.qml</file>
+        <file>Parts/LeftScreen/LeftScreen.qml</file>
+        <file>assets/carRender.jpg</file>
+        <file>assets/electric-car.png</file>
+        <file>assets/padlock.png</file>
+        <file>assets/open-padlock-silhouette.png</file>
+        <file>Parts/RightScreen/NavigationSearchBox.qml</file>
+        <file>assets/magnifying-glass.png</file>
+        <file>Parts/BottomBar/HVAC.qml</file>
+        <file>Parts/BottomBar/VolumeControl.qml</file>
+        <file>assets/volume-high.png</file>
+        <file>assets/volume-low.png</file>
+        <file>assets/mute.png</file>
+        <file>Parts/Icons/Icon.qml</file>
+        <file>assets/icons/bluetooth.png</file>
+        <file>assets/icons/camera.png</file>
+        <file>assets/icons/phone-call.png</file>
+        <file>assets/icons/radio.png</file>
+        <file>assets/icons/spotify.png</file>
+        <file>assets/icons/video-marketing.png</file>
+        <file>Parts/Icons/IconButton.qml</file>
+    </qresource>
+</RCC>
