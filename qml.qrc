@@ -23,5 +23,16 @@
         <file>assets/icons/spotify.png</file>
         <file>assets/icons/video-marketing.png</file>
         <file>Parts/Icons/IconButton.qml</file>
+        <file>Parts/Icons/LaunchButton.qml</file>
+        <file>Parts/Icons/LaunchPad.qml</file>
+        <file>LayoutManager.js</file>
+        <file>assets/icons/calendar.png</file>
+        <file>assets/icons/clapperboard.png</file>
+        <file>assets/icons/message.png</file>
+        <file>assets/icons/zoom.png</file>
+        <file>assets/icons/sedan-car-front.png</file>
+        <file>Parts/Theme.qml</file>
+        <file>assets/icons/icons.svg</file>
+        <file>assets/icons/battery.png</file>
     </qresource>
 </RCC>

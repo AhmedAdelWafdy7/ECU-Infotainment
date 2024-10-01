@@ -1,7 +1,8 @@
 import QtQuick 2.15
 import QtLocation 5.15
 import QtPositioning 5.15
-
+import "../Icons"
+import "../"
 
 Rectangle {
     id: rightScreen
@@ -119,12 +120,23 @@ Rectangle {
 
             text: systemHandler.outdoorTemp + "°F"
         }
-        Text{
-            id:usernameDisplay
+        Image{
+            id: usernameIcon
             anchors{
                 left: tempDisplay.right
                 leftMargin: 20
                 bottom: tempDisplay.bottom
+            }
+            source: "qrc:/assets/icons/icons.svg"
+            sourceSize: Qt.size(18,18)
+        }
+
+        Text{
+            id:usernameDisplay
+            anchors{
+                left: usernameIcon.right
+                leftMargin: 2
+                bottom: usernameIcon.bottom
             }
 
             font.pixelSize: 12

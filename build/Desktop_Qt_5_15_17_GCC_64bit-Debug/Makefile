@@ -795,10 +795,14 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_qml.cpp
 qrc_qml.cpp: ../../qml.qrc \
 		../../../../Qt_Desktop/5.15.17/gcc_64/bin/rcc \
+		../../LayoutManager.js \
 		../../main.qml \
+		../../Parts/Theme.qml \
 		../../Parts/LeftScreen/LeftScreen.qml \
+		../../Parts/Icons/LaunchButton.qml \
 		../../Parts/Icons/IconButton.qml \
 		../../Parts/Icons/Icon.qml \
+		../../Parts/Icons/LaunchPad.qml \
 		../../Parts/BottomBar/VolumeControl.qml \
 		../../Parts/BottomBar/HVAC.qml \
 		../../Parts/BottomBar/BottomBar.qml \
@@ -813,11 +817,18 @@ qrc_qml.cpp: ../../qml.qrc \
 		../../assets/open-padlock-silhouette.png \
 		../../assets/volume-low.png \
 		../../assets/icons/video-marketing.png \
+		../../assets/icons/battery.png \
 		../../assets/icons/spotify.png \
 		../../assets/icons/camera.png \
 		../../assets/icons/phone-call.png \
+		../../assets/icons/icons.svg \
 		../../assets/icons/radio.png \
-		../../assets/icons/bluetooth.png
+		../../assets/icons/zoom.png \
+		../../assets/icons/bluetooth.png \
+		../../assets/icons/calendar.png \
+		../../assets/icons/message.png \
+		../../assets/icons/sedan-car-front.png \
+		../../assets/icons/clapperboard.png
 	/home/benwafdy/Qt_Desktop/5.15.17/gcc_64/bin/rcc -name qml ../../qml.qrc -o qrc_qml.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h

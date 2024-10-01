@@ -1,10 +1,12 @@
 import QtQuick 2.15
+import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtGraphicalEffects 1.15
 import "../Icons/"
 
 Rectangle {
     id: bottomBar
+    signal openLauncher()
     anchors{
         left: parent.left
         right: parent.right
@@ -14,7 +16,19 @@ Rectangle {
     color: "black"
     height: parent.height / 12
 
-    Image{
+
+    LinearGradient {
+        anchors.fill: parent
+        start: Qt.point(0, 0)
+        end: Qt.point(0, 1000)
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: Style.black }
+            GradientStop { position: 1.0; color: Style.black60 }
+        }
+    }
+
+
+    Icon{
         id:carSettingsIcon
         anchors {
             left:  parent.left
@@ -22,11 +36,8 @@ Rectangle {
             verticalCenter: parent.verticalCenter
         }
 
-        height: parent.height * .85
-        fillMode: Image.PreserveAspectFit
-
-        source: "qrc:/assets/electric-car.png"
-
+        icon.source: "qrc:/assets/icons/sedan-car-front.png"
+        onClicked: openLauncher()
     }
 
 
