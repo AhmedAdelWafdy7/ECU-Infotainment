@@ -13,6 +13,7 @@ Button {
         horizontalAlignment: Image.AlignHCenter
         verticalAlignment: Image.AlignVCenter
         source: control.icon.source
+        fillMode: Image.PreserveAspectFit
         scale: control.pressed ? 0.9 : control.scale
         Behavior on scale { NumberAnimation { duration: 200; } }
     }

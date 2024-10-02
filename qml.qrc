@@ -16,17 +16,12 @@
         <file>assets/volume-low.png</file>
         <file>assets/mute.png</file>
         <file>Parts/Icons/Icon.qml</file>
-        <file>assets/icons/bluetooth.png</file>
-        <file>assets/icons/camera.png</file>
         <file>assets/icons/phone-call.png</file>
-        <file>assets/icons/radio.png</file>
         <file>assets/icons/spotify.png</file>
-        <file>assets/icons/video-marketing.png</file>
         <file>Parts/Icons/IconButton.qml</file>
         <file>Parts/Icons/LaunchButton.qml</file>
         <file>Parts/Icons/LaunchPad.qml</file>
         <file>LayoutManager.js</file>
-        <file>assets/icons/calendar.png</file>
         <file>assets/icons/clapperboard.png</file>
         <file>assets/icons/message.png</file>
         <file>assets/icons/zoom.png</file>
@@ -34,5 +29,20 @@
         <file>Parts/Theme.qml</file>
         <file>assets/icons/icons.svg</file>
         <file>assets/icons/battery.png</file>
+        <file>assets/icons/Headlight2.svg</file>
+        <file>assets/icons/Headlights.svg</file>
+        <file>assets/icons/Property 1=Default.svg</file>
+        <file>assets/icons/Seatbelt.svg</file>
+        <file>assets/destination.gif</file>
+        <file>Parts/RightScreen/NavigationScreenHelper.qml</file>
+        <file>assets/icons8-current-location-64.png</file>
+        <file>assets/icons/telephone-call.png</file>
+        <file>assets/icons/arrows.png</file>
+        <file>assets/icons/radio.png</file>
+        <file>assets/icons/dslr-camera.png</file>
+        <file>assets/icons/video.png</file>
+        <file>assets/icons/clapperboard2.png</file>
+        <file>assets/icons/bluethooth.png</file>
+        <file>assets/focus.png</file>
     </qresource>
 </RCC>

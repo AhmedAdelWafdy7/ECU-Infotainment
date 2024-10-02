@@ -28,51 +28,9 @@ Rectangle {
 
     RowLayout {
         id: root
-        property int index: 0
-        property int batteryPercentage: 90
-        spacing : 18
-        RowLayout {
-            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-            spacing: 4
-            Text {
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                property bool current: root.index === 0
-                color: current ? Theme.isDark ? Theme.white : "#171717" : Theme.black20
-                text: "P"
-                font.family: "Inter"
-                font.bold: Font.Bold
-                font.pixelSize: 18
-            }
-            Text {
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                property bool current: root.index === 1
-                color: current ? "#171717" : Theme.black20
-                text: "R"
-                font.family: "Inter"
-                font.bold: Font.Bold
-                font.pixelSize: 18
-            }
-            Text {
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                property bool current: root.index === 2
-                color: current ? "#171717" : Theme.black20
-                text: "N"
-                font.family: "Inter"
-                font.bold: Font.Bold
-                font.pixelSize: 18
-            }
-            Text {
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                property bool current: root.index === 3
-                color: current ? "#171717" : Theme.black20
-                text: "D"
-                font.family: "Inter"
-                font.bold: Font.Bold
-                font.pixelSize: 18
-            }
-        }
 
         RowLayout {
+                Layout.leftMargin: 50
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 Image {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
@@ -87,8 +45,71 @@ Rectangle {
                     font.bold: Font.Bold
                     font.pixelSize: 10
                 }
+
             }
 
     }
 
+
+    ColumnLayout {
+        id: carLight
+        spacing: 2
+        Icon {
+            id: headlights2
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            icon.source: "qrc:/assets/icons/Headlight2.svg"
+            implicitHeight: 50
+            implicitWidth: 50
+        }
+        Icon {
+            id: property1
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            icon.source: "qrc:/assets/icons/Property 1=Default.svg"
+            implicitHeight: 50
+            implicitWidth: 50
+        }
+        Icon {
+            id: headlights
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            icon.source: "qrc:/assets/icons/Headlights.svg"
+            implicitHeight: 50
+            implicitWidth: 50
+        }
+        Icon {
+            id: seatbelt
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            icon.source: "qrc:/assets/icons/Seatbelt.svg"
+            implicitHeight: 50
+            implicitWidth: 50
+        }
+    }
+    Icon {
+        id: lockIcon
+        icon.source: (systemHandler.carLocked ? "qrc:/assets/padlock.png" : "qrc:/assets/open-padlock-silhouette.png")
+        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+        implicitHeight: 40
+        implicitWidth: 40
+        MouseArea{
+            anchors.fill: parent
+            onClicked: systemHandler.setCarLocked( !systemHandler.carLocked)
+        }
+        anchors{
+            bottom:  carRender.top
+            bottomMargin: 5
+            horizontalCenter: carRender.horizontalCenter
+            margins: 10
+        }
+    }
+    Rectangle {
+        width: 2
+        height: 40  // Height of the line
+        color: "#A8C3F4" // Color of the line
+        visible: systemHandler.carLocked? true : false
+        anchors {
+            top: lockIcon.bottom
+            topMargin: 5  // Space between the lock icon and the line
+            horizontalCenter: lockIcon.horizontalCenter
+        }
+    }
 }
+

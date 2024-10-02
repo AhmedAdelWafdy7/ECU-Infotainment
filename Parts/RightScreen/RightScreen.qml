@@ -1,11 +1,25 @@
 import QtQuick 2.15
 import QtLocation 5.15
 import QtPositioning 5.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
+import QtGraphicalEffects 1.15
+import QtQml 2.15
 import "../Icons"
 import "../"
 
-Rectangle {
+Page {
     id: rightScreen
+
+    property var currentLoc: QtPositioning.coordinate(31.028019 , 31.368806)   // current location
+    property bool isRoutingStart: false
+    property bool runMapAnimation: false
+    property bool enableGradient: true
+    padding: 0
+
+    function startAnimation (){
+        geoModel.update()
+    }
 
     anchors{
         top: parent.top
@@ -27,53 +41,211 @@ Rectangle {
             id: map
             anchors.fill: parent
             plugin: mapPlugin
-            center: QtPositioning.coordinate(31.037933, 31.381523) // Oslo
+            center: QtPositioning.coordinate(31.028019 , 31.368806) // Oslo
             zoomLevel: 14
+            bearing: -80
 
-            PinchHandler {
-                id: pinch
-                target: null
-                onActiveChanged: if (active) {
-                    map.startCentroid = map.toCoordinate(pinch.centroid.position, false)
+            MapItemView{
+                id:maproute
+                model: routeModel
+                delegate: Component{
+                    MapRoute{
+                        route:  routeData
+                        line.color: "aqua"
+                        line.width: adaptivewidth(7)
+                    }
                 }
-                onScaleChanged: (delta) => {
-                    map.zoomLevel += Math.log2(delta)
-                    map.alignCoordinateToPoint(map.startCentroid, pinch.centroid.position)
+            }
+
+            MapQuickItem{
+                id: currentLocationMark
+                coordinate: QtPositioning.coordinate(31.028019 , 31.368806)
+                visible: true
+                z: 1
+
+                onCoordinateChanged: {
+                    if (isRoutingStart)
+                        map.center = coordinate
                 }
-                onRotationChanged: (delta) => {
-                    map.bearing -= delta
-                    map.alignCoordinateToPoint(map.startCentroid, pinch.centroid.position)
+
+                sourceItem: Rectangle {
+                                width: adaptive.width(100) * (map.zoomLevel / 17)
+                                height: adaptive.height(100) *  (map.zoomLevel / 17)
+                                color: "transparent"
+                                anchors.centerIn: parent
+                                radius: 180
+
+                        Image {
+                            id: car
+                            width: adaptive.width(100) * (map.zoomLevel / 17)
+                            height: adaptive.height(100) *  (map.zoomLevel / 17)
+                            source: "qrc:/assets/focus.png"
+                            anchors.centerIn: parent
+                        }
+                    }
+
+                    Behavior on coordinate {
+                        PropertyAnimation {
+                        duration: 5000
+                    }
                 }
-                grabPermissions: PointerHandler.TakeOverForbidden
             }
-            WheelHandler {
-                id: wheel
-                // workaround for QTBUG-87646 / QTBUG-112394 / QTBUG-112432:
-                // Magic Mouse pretends to be a trackpad but doesn't work with PinchHandler
-                // and we don't yet distinguish mice and trackpads on Wayland either
-                acceptedDevices: Qt.platform.pluginName === "cocoa" || Qt.platform.pluginName === "wayland"
-                                 ? PointerDevice.Mouse | PointerDevice.TouchPad
-                                 : PointerDevice.Mouse
-                rotationScale: 1/120
-                property: "zoomLevel"
-            }
-            DragHandler {
-                id: drag
-                target: null
-                onTranslationChanged: (delta) => map.pan(-delta.x, -delta.y)
-            }
-            Shortcut {
-                enabled: map.zoomLevel < map.maximumZoomLevel
-                sequence: StandardKey.ZoomIn
-                onActivated: map.zoomLevel = Math.round(map.zoomLevel + 1)
-            }
-            Shortcut {
-                enabled: map.zoomLevel > map.minimumZoomLevel
-                sequence: StandardKey.ZoomOut
-                onActivated: map.zoomLevel = Math.round(map.zoomLevel - 1)
+
+            // Destination marker
+                    MapQuickItem {
+                        id: destinationMarker
+                        visible: true
+                        z: 1
+
+                        sourceItem: Rectangle {
+                            width: adaptive.width(50) * (map.zoomLevel / 17)
+                            height: adaptive.height(50) *  (map.zoomLevel / 17)
+                            color: "transparent"
+                            anchors.centerIn: parent
+                            radius: 180
+
+                            AnimatedImage {
+                                width: adaptive.width(50) * (map.zoomLevel / 17)
+                                height: adaptive.height(50) *  (map.zoomLevel / 17)
+                                source: "qrc:/assets/destination.gif"
+                                anchors.centerIn: parent
+                            }
+                        }
+                    }
+
+                    // Departure location marker
+                            MapQuickItem {
+                                id: startMarker
+                                visible: true
+                                z: 1
+
+                                sourceItem: Rectangle {
+                                    width: adaptive.width(50) * (map.zoomLevel / 17)
+                                    height: adaptive.height(50) *  (map.zoomLevel / 17)
+                                    color: "transparent"
+                                    anchors.centerIn: parent
+                                    radius: 180
+
+                                    Image {
+                                        width: adaptive.width(50) * (map.zoomLevel / 17)
+                                        height: adaptive.height(50) *  (map.zoomLevel / 17)
+                                        source: "qrc:/assets/location-pin.png"
+                                        anchors.centerIn: parent
+                                    }
+                                }
+                            }
+
+
+                            // Route model to calculate route
+                                    RouteModel {
+                                        id: routeModel
+                                        plugin: geoModel.plugin
+                                        query: RouteQuery {
+                                            id: routeQuery
+                                        }
+
+                                        onRoutesChanged: {
+                                            map.center = routeModel.get(0).path[(routeModel.get(0).path.length / 2).toFixed(0)]
+                                            destinationMarker.coordinate = QtPositioning.coordinate(26.2124, 78.1772)
+                                            startMarker.coordinate = currentLoc
+                                            destinationMarker.visible = true
+                                            startMarker.visible = true
+                                            animationTimer.running = true
+                                        }
+                                    }
+
+                                    // Timer to start car driving animation
+                                    Timer {
+                                        id: animationTimer
+                                        interval: 3000
+                                        onTriggered: {
+                                            startMarker.visible = false
+                                            currentLocationMark.visible = true
+                                            isRoutingStart = true
+                                            simulateDrive.path = routeModel.get(0).path
+
+                                            routeStartAnimation.running = true
+                                            simulateDrive.running = true
+                                        }
+                                    }
+
+                                    // To simulate car driving on route
+                                    Timer {
+                                        id: simulateDrive
+                                        property var path
+                                        property int index
+                                        interval: 1000
+                                        repeat: true
+
+                                        onTriggered: {
+                                            if (path.length > index) {
+                                                currentLocationMarker.coordinate = path[index]
+                                                index++
+                                            } else {
+                                                simulateDrive.stop()
+                                            }
+                                        }
+                                    }
+
+
+            GeocodeModel {
+                id: geoModel
+                plugin: Plugin {
+                    name: "osm"
+                    PluginParameter {
+                        name: "osm.mapping.custom.host"
+                        value: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
+                    }
+                }
+                query: "Gwalior"
+
+                onLocationsChanged: {
+                    if (count) {
+                        routeQuery.addWaypoint(currentLoc)
+                        routeQuery.addWaypoint(get(0).coordinate)
+                        routeModel.update()
+                    }
+                }
             }
         }
+        // To find coordinate of destination location
 
+        // Animation to show at start where map tilts and rotates
+            SequentialAnimation {
+                id: routeStartAnimation
+
+                PropertyAnimation {
+                    id: centeranimation
+                    duration: 1000
+                    target: map
+                    property: "center"
+                    to: currentLoc
+                }
+                NumberAnimation {
+                    id: zoomAnimation
+                    target: map
+                    duration: 6000
+                    properties: "zoomLevel"
+                    from: map.zoomLevel
+                    to: 18
+                }
+                NumberAnimation {
+                    id: tiltAnimation
+                    target: map
+                    duration: 1000
+                    properties: "tilt"
+                    from: 0
+                    to: map.maximumTilt
+                }
+                NumberAnimation {
+                    id: rotationAnimation
+                    target: map
+                    duration: 5000
+                    properties: "bearing"
+                    from: -80
+                    to: 0
+                }
+            }
         Image {
             id: lockIcon
             source: (systemHandler.carLocked ? "qrc:/assets/padlock.png" : "qrc:/assets/open-padlock-silhouette.png")

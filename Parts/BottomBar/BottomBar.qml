@@ -14,18 +14,7 @@ Rectangle {
     }
 
     color: "black"
-    height: parent.height / 12
-
-
-    LinearGradient {
-        anchors.fill: parent
-        start: Qt.point(0, 0)
-        end: Qt.point(0, 1000)
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: Style.black }
-            GradientStop { position: 1.0; color: Style.black60 }
-        }
-    }
+    height: parent.height / 10
 
 
     Icon{
@@ -47,7 +36,7 @@ Rectangle {
             spacing: 20
 
             Icon{
-                icon.source: "qrc:/assets/icons/phone-call.png"
+                icon.source: "qrc:/assets/icons/telephone-call.png"
             }
 
             Icon{
@@ -55,7 +44,7 @@ Rectangle {
             }
 
             Icon{
-                icon.source: "qrc:/assets/icons/bluetooth.png"
+                icon.source: "qrc:/assets/icons/bluethooth.png"
             }
 
             Icon{
@@ -63,11 +52,11 @@ Rectangle {
             }
 
             Icon{
-                icon.source: "qrc:/assets/icons/camera.png"
+                icon.source: "qrc:/assets/icons/dslr-camera.png"
             }
 
             Icon{
-                icon.source: "qrc:/assets/icons/video-marketing.png"
+                icon.source: "qrc:/assets/icons/clapperboard2.png"
             }
 
         }

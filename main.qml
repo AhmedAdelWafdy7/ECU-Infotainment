@@ -7,6 +7,7 @@ import "Parts/BottomBar"
 import "Parts/RightScreen"
 import "Parts/LeftScreen"
 import "Parts/Icons"
+import "Parts"
 import "qrc:/LayoutManager.js" as Responsive
 
 
@@ -38,6 +39,13 @@ ApplicationWindow {
 
     RightScreen{
         id: rightScreen
+        visible: Theme.mapAreaVisible
+        spacing: 0
+        NavigationScreenHelper{
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            runMenuAnimation: true
+        }
     }
 
     LaunchPad{
